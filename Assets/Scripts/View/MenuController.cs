@@ -37,6 +37,9 @@ public class MenuController : MonoBehaviour
         img.Colored = eyeOn;
     }
 
+    /// <summary>
+    /// Вкл / выкл меню
+    /// </summary>
     public void OnShowBtnClick()
     {
         if (menu.activeSelf)
@@ -69,6 +72,12 @@ public class MenuController : MonoBehaviour
         sliderBG.material.color = color;
     }
 
+    /// <summary>
+    /// Динамически заполняем менюшку и прикручиваем к словарям соответствующие объекты.
+    /// </summary>
+    /// <param name="objects">Список объектов на сцене</param>
+    /// <param name="selectedObjects">Словарь для соотношения, какой переключатель за какой объект отвечает.</param>
+    /// <param name="objectsVisibility">Словарь для соотношения, какой глаз отвечает за какой объект.</param>
     public void FillContent(List<GameObject> objects, Dictionary<string, Toggle> selectedObjects, Dictionary<string, UIImage> objectsVisibility)
     {
         foreach (GameObject go in objects)
@@ -80,6 +89,11 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// заполняет меню информационными полями и возвращает объекты, которые нужно привязать к объектам на сцене.
+    /// </summary>
+    /// <param name="name">Имя объекта, для которого создаётся менюшка</param>
+    /// <returns></returns>
     private UiContainer AddInputField(string name)
     {
         int deltaHeight = pixDeltaHeight * fields.Count;
@@ -117,6 +131,10 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Подгоняем менюшку по размеру
+    /// </summary>
+    /// <param name="deltaHeight"></param>
     private void FitHeight(int deltaHeight)
     {
         if (deltaHeight > 510)

@@ -12,8 +12,14 @@ public class CameraController : MonoBehaviour
     private Vector3 rotation = Vector3.zero;
     private bool canMove;
 
+    /// <summary>
+    /// Точка фокуса камеры
+    /// </summary>
     public Vector3 FocusPoint { get; set; }
 
+    /// <summary>
+    /// Вкл / выкл движение камеры
+    /// </summary>
     private void SwitchMoseControl()
     {
         if (Input.GetMouseButtonDown(1))
@@ -47,6 +53,9 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// плавненько перемещаем фокус к выбранному объекту.
+    /// </summary>
     private void MoveToFocus()
     {
         containerTransform.position = Vector3.Lerp(containerTransform.position, FocusPoint, changeFocusSpeed);

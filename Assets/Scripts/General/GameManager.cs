@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private MenuController menuController;
+    /// <summary>Сюда кидаем контейнер с объектами</summary>
     [SerializeField] private Transform objectsContainer;
+    /// <summary>Регулятор прозрачности</summary>
     [SerializeField] private Slider slider;
 
     private List<GameObject> objects = new ();
@@ -15,6 +17,17 @@ public class GameManager : MonoBehaviour
     private CameraController cc;
 
     private void Awake()
+    {
+        CollectData();
+
+        MaterialEditor materialEditor = new MaterialEditor(menuController, objects, slider, selectedObjects);
+        menuController.FillContent(objects, selectedObjects, objectsVisibility);
+    }
+
+    /// <summary>
+    /// Собираем данные со всех объектов
+    /// </summary>
+    private void CollectData()
     {
         foreach (Transform t in objectsContainer.transform)
         {
@@ -26,13 +39,13 @@ public class GameManager : MonoBehaviour
             go.GetComponent<InteractiveObject>().NewPosition += UpdateCameraFocusPoint;
         }
 
-        MaterialEditor materialEditor = new MaterialEditor(menuController, objects, slider, selectedObjects);
-
-        menuController.FillContent(objects, selectedObjects, objectsVisibility);
-
         cc = Camera.main.GetComponent<CameraController>();
     }
 
+    /// <summary>
+    /// Задаём точку привязки камеры.
+    /// </summary>
+    /// <param name="newFocus">Точка привязки камеры</param>
     private void UpdateCameraFocusPoint(Vector3 newFocus)
     {
         cc.FocusPoint = newFocus;
